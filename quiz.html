@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Quiz Project</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            background-color: #f0f8ff; 
+        }
+        #quiz {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            box-shadow: 0px 0px 10px #ccc;
+            border-radius: 8px;
+            background-color: #ffffff;
+        }
+        button { 
+            margin: 5px; 
+            padding: 10px; 
+            background-color: #4caf50; 
+            color: white; 
+            border: none; 
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+    <div id="quiz">
+        <h1>JavaScript Quiz</h1>
+        <p id="question"></p>
+        <div id="options"></div>
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "What does HTML stand for?", options: ["Hyper Text Markup Language", "Home Tool Markup Language", "Hyperlinks and Text Markup Language", "Hyper Tool Markup Language"], answer: "Hyper Text Markup Language" },
+            { question: "Which JavaScript keyword declares a variable?", options: ["var", "let", "const", "All of the above"], answer: "All of the above" },
+            { question: "Which function is used to parse a string to an integer?", options: ["parseInt", "parseFloat", "Number", "toString"], answer: "parseInt" },
+            { question: "Which of the following is a looping structure in JavaScript?", options: ["for", "while", "do-while", "All of the above"], answer: "All of the above" },
+            { question: "What does CSS stand for?", options: ["Colorful Style Sheets", "Cascading Style Sheets", "Creative Style Sheets", "Computer Style Sheets"], answer: "Cascading Style Sheets" },
+            { question: "How can you add a comment in JavaScript?", options: ["<!-- -->", "//", "/* */", "Both // and /* */"], answer: "Both // and /* */" },
+            { question: "Which company developed JavaScript?", options: ["Microsoft", "Apple", "Netscape", "Sun Microsystems"], answer: "Netscape" },
+            { question: "What will 'typeof []' return in JavaScript?", options: ["object", "array", "list", "undefined"], answer: "object" },
+            { question: "Which symbol is used for single-line comments in JavaScript?", options: ["/*", "//", "<!--", "#"], answer: "//" }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const questionEl = document.getElementById("question");
+            const optionsEl = document.getElementById("options");
+
+            questionEl.textContent = quizData[currentQuestion].question;
+            optionsEl.innerHTML = "";
+
+            quizData[currentQuestion].options.forEach(option => {
+                const button = document.createElement("button");
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option);
+                optionsEl.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selected) {
+            if (selected === quizData[currentQuestion].answer) {
+                score++;
+            }
+            currentQuestion++;
+
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                document.getElementById("quiz").innerHTML = `<h2>Quiz Completed!</h2><p>Score: ${score}/${quizData.length}</p>`;
+            }
+        }
+
+        window.onload = loadQuestion;
+    </script>
+</body>
+</html>
